@@ -23,7 +23,7 @@
   }
 
   &:not(:disabled):hover {
-    background: #6F4BD8;
+    background: #6f4bd8;
   }
 
   &:disabled {
@@ -37,8 +37,9 @@
     color: #835afd;
 
     &:not(:disabled):hover {
-      background: #835afd;
-      color: #fff;
+      background: #fff;
+      border-color: #6f4bd8;
+      color: #6f4bd8;
     }
   }
 }
