@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import Modal from 'react-modal';
 
 import { useRoom } from '../hooks/useRoom'
+import { database } from '../services/firebase';
 
 import logoImg from '../assets/images/logo.svg'
 import closeImg from '../assets/images/close.svg'
+import deleteImg from '../assets/images/delete.svg'
+import excludeImg from '../assets/images/exclude.svg'
 
 import { Button } from '../components/Button'
 import { RoomCode } from '../components/RoomCode'
@@ -19,16 +22,45 @@ interface RoomParams {
 }
 
 export function AdminRoom() {
+  const [modalRoomIsOpen, setModalRoomIsOpen] = useState(false);
+  const [modalQuestionIsOpen, setModalQuestionIsOpen] = useState(false);
+  const [questionForExclude, setQuestionForExclude] = useState("");
+  
   const { id } = useParams<RoomParams>()
   const { questions, title } = useRoom(id);
-  const [isOpen, setIsOpen] = useState(false);
 
-  function openModal() {
-    setIsOpen(true);
+  const history = useHistory()
+
+  function openModalRoom() {
+    setModalRoomIsOpen(true);
   }
 
-  function closeModal() {
-    setIsOpen(false);
+  function closeModalRoom() {
+    setModalRoomIsOpen(false);
+  }
+
+  function openModalQuestion(questionId: string) {
+    setModalQuestionIsOpen(true);
+    setQuestionForExclude(questionId)
+  }
+
+  function closeModalQuestion() {
+    setModalQuestionIsOpen(false);
+  }
+
+  async function handleEndRoom() {
+    await database.ref(`rooms/${id}`).update({
+      endedAt: new Date(),
+    })
+
+    setModalRoomIsOpen(false)
+    history.push('/')
+  } 
+
+  async function handleDeleteQuestion() {
+    await database.ref(`rooms/${id}/questions/${questionForExclude}`).remove()
+
+    setModalQuestionIsOpen(false)
   }
 
   return (
@@ -39,7 +71,7 @@ export function AdminRoom() {
 
           <div>
             <RoomCode code={id} />
-            <Button isOutlined onClick={openModal} type="button">Encerrar</Button>
+            <Button isOutlined onClick={openModalRoom} type="button">Encerrar</Button>
           </div>
         </div>
       </header>
@@ -55,7 +87,12 @@ export function AdminRoom() {
           {questions.length > 0 ? (
             questions.map((question) => (
               <Question key={question.id} author={question.author} content={question.content}>
-                l
+                <button 
+                  type="button"
+                  onClick={() => openModalQuestion(question.id)}
+                >
+                  <img src={deleteImg} alt="Remover pergunta" />
+                </button>
               </Question>
             ))
           ) : (
@@ -65,8 +102,8 @@ export function AdminRoom() {
       </main>
 
       <Modal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
+        isOpen={modalRoomIsOpen}
+        onRequestClose={closeModalRoom}
         className="room-modal"
         overlayClassName="room-modal-overlay"
         contentLabel="Modal de confirmação para encerramento de sala"
@@ -78,12 +115,36 @@ export function AdminRoom() {
         <p>Tem certeza que você deseja encerrar esta sala?</p>
 
         <div className="actions">
-          <button className="cancel-button" type="button" onClick={closeModal}>
+          <button className="cancel-button" type="button" onClick={closeModalRoom}>
             Cancelar
           </button>
 
-          <button className="accept-button" type="button">
+          <button className="accept-button" type="button" onClick={handleEndRoom}>
             Sim, encerrar
+          </button>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={modalQuestionIsOpen}
+        onRequestClose={closeModalQuestion}
+        className="room-modal"
+        overlayClassName="room-modal-overlay"
+        contentLabel="Modal de confirmação para exclusão de pergunta"
+      >
+        <img src={excludeImg} alt="Excluir pergunta" />
+
+        <h2>Excluir pergunta</h2>
+
+        <p>Tem certeza que você deseja excluir esta pergunta?</p>
+
+        <div className="actions">
+          <button className="cancel-button" type="button" onClick={closeModalQuestion}>
+            Cancelar
+          </button>
+
+          <button className="accept-button" type="button" onClick={handleDeleteQuestion}>
+            Sim, excluir
           </button>
         </div>
       </Modal>
