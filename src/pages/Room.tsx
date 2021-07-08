@@ -9,6 +9,7 @@ import logoImg from '../assets/images/logo.svg'
 import { Button } from '../components/Button'
 import { RoomCode } from '../components/RoomCode'
 import { UserInfo } from '../components/UserInfo'
+import { Question } from '../components/Question'
 
 import '../styles/room.scss'
 
@@ -128,11 +129,15 @@ export function Room() {
           </div>
         </form>
 
-        {questions.length > 0 ? (
-          <div>questions</div>
-        ) : (
-          <div>not questions</div>
-        )}
+        <div className="question-list">
+          {questions.length > 0 ? (
+            questions.map((question) => (
+              <Question key={question.id} author={question.author} content={question.content} />
+            ))
+          ) : (
+            <div>not questions</div>
+          )}
+        </div>
       </main>
     </div>
   )
