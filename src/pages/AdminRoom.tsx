@@ -41,7 +41,9 @@ export function AdminRoom() {
         <div className="question-list">
           {questions.length > 0 ? (
             questions.map((question) => (
-              <Question key={question.id} author={question.author} content={question.content} />
+              <Question key={question.id} author={question.author} content={question.content}>
+                l
+              </Question>
             ))
           ) : (
             <div>not questions</div>

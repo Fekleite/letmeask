@@ -22,5 +22,32 @@
         font-weight: 400;
       }
     }
+
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+
+      transition: filter 0.2s;
+
+      &.like-button {
+        display: flex;
+        align-items: flex-end;
+        gap: 9px;
+        color: #737380;
+
+        &.liked {
+          color: #835afd;
+
+          svg path {
+            stroke: #835afd;
+          }
+        }
+
+        &:hover {
+          filter: brightness(0.7)
+        }
+      }
+    }
   }
 }
