@@ -8,6 +8,23 @@
     margin-top: 8px;
   }
 
+  &.answered {
+    background: #dbdcdd;
+
+    footer .user-info img {
+      filter: grayscale(1);
+    }
+  }
+
+  &.highlighted {
+    background: #f4f0ff;
+    border: 1px solid #835afd;
+
+    footer .user-info span {
+      color: #29292e;
+    }
+  }
+
   footer {
     display: flex;
     justify-content: space-between;
@@ -21,6 +38,11 @@
         color: #737380;
         font-weight: 400;
       }
+    }
+
+    > div {
+      display: flex;
+      gap: 16px;
     }
 
     button {
@@ -45,7 +67,7 @@
         }
 
         &:hover {
-          filter: brightness(0.7)
+          filter: brightness(0.7);
         }
       }
     }
