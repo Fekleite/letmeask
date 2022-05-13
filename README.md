@@ -1,25 +1,5 @@
 <h1 align="center">Let Me Ask 🎯</h1>
 
-<p align="center">
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-835AFD" alt="License MIT">
-  </a>
-  
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Fekleite/letmeask?color=835AFD">
-
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Fekleite/letmeask?color=835AFD">
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Fekleite/letmeask?color=835AFD">
-  
-  <a href="https://github.com/Fekleite/letmeask/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Fekleite/letmeask?color=835AFD">
-  </a>
-
-  <a href="https://github.com/Fekleite/letmeask/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/Fekleite/letmeask?color=835AFD">
-  </a>
-</p>
-
 <p align="center"  >
   <img src="https://user-images.githubusercontent.com/48728541/125143817-450b2d80-e0f2-11eb-9059-2bee20ee4dc8.png" />
 </p>
